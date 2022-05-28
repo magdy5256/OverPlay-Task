@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 4
+        locationManager.distanceFilter = 10
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -95,7 +95,7 @@ extension ViewController : CLLocationManagerDelegate {
         if self.oldLocation == nil {
             self.oldLocation = location
         }
-        if self.currentLocation.distance(from: oldLocation) > 3 {
+        if self.currentLocation.distance(from: oldLocation) > 9 {
             restartVideo()
         }
         
