@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zlH-sI-But">
-                                <rect key="frame" x="41.5" y="94" width="331" height="448"/>
+                                <rect key="frame" x="41.5" y="94" width="331" height="627"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
@@ -27,7 +28,7 @@
                             <constraint firstItem="zlH-sI-But" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="6tt-SE-viv"/>
                             <constraint firstItem="zlH-sI-But" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="9gr-EK-EeJ"/>
                             <constraint firstItem="zlH-sI-But" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="R3N-ma-t13"/>
-                            <constraint firstItem="zlH-sI-But" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="kJs-H5-Al7"/>
+                            <constraint firstItem="zlH-sI-But" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.7" id="kJs-H5-Al7"/>
                         </constraints>
                     </view>
                     <connections>
