@@ -26,13 +26,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        playVideo()
-        locationManager = CLLocationManager()
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 10
+        self.becomeFirstResponder()
+        initializeView()
+        
     }
+    func initializeView() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10
+        playVideo()
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?){
+        if motion == . {
+            player.pause()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Check for auth
@@ -98,7 +113,5 @@ extension ViewController : CLLocationManagerDelegate {
         if self.currentLocation.distance(from: oldLocation) > 9 {
             restartVideo()
         }
-        
-//        locationManager.stopUpdatingLocation()
     }
 }
