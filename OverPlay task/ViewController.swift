@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var videoView: UIView!
     
-    
     private var player: AVQueuePlayer!
     private var playerLayer: AVPlayerLayer!
     private var playerItem: AVPlayerItem!
@@ -29,45 +28,55 @@ class ViewController: UIViewController {
     var oldX: Double!
     var oldZ: Double!
     
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeView()
+        configureViewElements()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        playerLooper = nil
+        locationManager.stopUpdatingLocation()
+        stopGyros()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startGyros()
+        checkLocationAvailability()
+    }
+    
+    func checkLocationAvailability() {
         if isLocationServicesEnabled() {
             locationManager.startUpdatingLocation()
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
     }
-    deinit {
-        playerLooper = nil
-        locationManager.stopUpdatingLocation()
-        stopGyros()
+    
+    func configureViewElements() {
+        configureLocationManager()
+        playVideo()
     }
     
-    
-    func initializeView() {
+    func configureLocationManager() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 10
-        playVideo()
+        
     }
-    
-    override func becomeFirstResponder() -> Bool {
-        return true
-    }
-    
+}
+
+extension ViewController {
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?){
         if motion == .motionShake {
             player.pause()
         }
     }
-
     
     func startGyros() {
         if motion.isGyroAvailable {
@@ -83,7 +92,7 @@ class ViewController: UIViewController {
                     if self.oldZ == nil {
                         self.oldZ = self.motion.gyroData?.rotationRate.z
                     }
-                    self.setVolume(newX: data.rotationRate.x )
+                    self.setVolume(newX: data.rotationRate.x)
                     self.setVideoPosition(newZ:data.rotationRate.z )
                 }
             })
@@ -164,7 +173,7 @@ class ViewController: UIViewController {
     
     func isLocationServicesEnabled() -> Bool {
         if CLLocationManager.locationServicesEnabled() {
-            switch(CLLocationManager.authorizationStatus()) {
+            switch locationManager.authorizationStatus {
             case .notDetermined, .restricted, .denied:
                 return false
             case .authorizedAlways, .authorizedWhenInUse:
@@ -181,8 +190,6 @@ class ViewController: UIViewController {
 extension ViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        // Use location.latitude and location.longitude here
-        // If you don't want to receive any more location data then call
         self.currentLocation = location
         
         if self.oldLocation == nil {
